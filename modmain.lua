@@ -1,3 +1,4 @@
 PrefabFiles = {
     "crown",
+    "gel"
 }
