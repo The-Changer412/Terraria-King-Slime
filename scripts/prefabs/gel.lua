@@ -26,6 +26,9 @@ local function fn()
     inst.components.inventoryitem.imagename = "gel"
     inst.components.inventoryitem.atlasname = "images/inventoryimages/gel.xml"
 
+    -- make the item inspectable
+    inst:AddComponent("inspectable")
+
     --make the item stackable
     inst:AddComponent("stackable")
     inst.components.stackable.maxsize = 40

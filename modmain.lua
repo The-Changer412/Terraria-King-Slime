@@ -41,9 +41,14 @@ local slime_crown = AddRecipe(
      "slime_crown.tex" -- image
 )
 
--- set the name and the recipe description for the items
+-- set the name, inspection quote, and the recipe description for the items
 STRINGS.NAMES.GEL = "Gel"
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.GEL = "Ew, it's slimy."
+
 STRINGS.NAMES.CROWN = "Crown"
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.CROWN = "It's to bad that it's to small to put on my head."
 STRINGS.RECIPE_DESC.CROWN = "The crown is to small to put on your head."
+
 STRINGS.NAMES.SLIME_CROWN = "Slime Crown"
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.SLIME_CROWN = "It looks like a king version of the small slimy creatures."
 STRINGS.RECIPE_DESC.SLIME_CROWN = "I heard that this item will attract a certain creature."

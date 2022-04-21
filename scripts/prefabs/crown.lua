@@ -26,6 +26,9 @@ local function fn()
     inst.components.inventoryitem.imagename = "crown"
     inst.components.inventoryitem.atlasname = "images/inventoryimages/crown.xml"
 
+    -- make the item inspectable
+    inst:AddComponent("inspectable")
+
     return inst
 end
 
