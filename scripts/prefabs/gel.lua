@@ -23,6 +23,9 @@
     inst.components.inventoryitem.imagename = "gel"
     inst.components.inventoryitem.atlasname = "images/inventoryimages/gel.xml"
 
+    inst:AddComponent("stackable")
+    inst.components.stackable.maxsize = 40
+
     return inst
 end
 
