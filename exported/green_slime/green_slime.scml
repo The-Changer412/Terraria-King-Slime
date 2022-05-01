@@ -5,26 +5,26 @@
         <file id="1" name="green_slime/green_slime_1.png" width="33" height="24" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="green_slime">
-        <animation id="0" name="idle" length="300">
+        <animation id="0" name="idle" length="400">
             <mainline>
                 <key id="0">
-                    <object_ref id="0" name="green_slime_0" folder="0" file="0" abs_x="-16.346154" abs_y="21.807692" abs_pivot_x="0" abs_pivot_y="1" abs_angle="360" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="0" name="green_slime_0" folder="0" file="0" abs_x="-113.346154" abs_y="152.807692" abs_pivot_x="0" abs_pivot_y="1" abs_angle="0" abs_scale_x="7" abs_scale_y="7" abs_a="1" timeline="0" key="0" z_index="0"/>
                 </key>
-                <key id="1" time="150">
+                <key id="1" time="200">
                     <object_ref id="0" timeline="1" key="0" z_index="0"/>
                 </key>
             </mainline>
             <timeline id="0" name="green_slime_0">
                 <key id="0" spin="0">
-                    <object folder="0" file="0" x="-16.346154" y="21.807692"/>
+                    <object folder="0" file="0" x="-113.346154" y="152.807692" angle="0" scale_x="7" scale_y="7"/>
                 </key>
-                <key id="1" time="150" spin="0">
-                    <object folder="0" file="0" x="-16.346154" y="21.807692"/>
+                <key id="1" time="200" spin="0">
+                    <object folder="0" file="0" x="-113.346154" y="152.807692" angle="0" scale_x="7" scale_y="7"/>
                 </key>
             </timeline>
             <timeline id="1" name="green_slime_1">
-                <key id="0" time="150" spin="0">
-                    <object folder="0" file="1" x="-16.346154" y="23.461538"/>
+                <key id="0" time="200" spin="0">
+                    <object folder="0" file="1" x="-114.346154" y="166.461538" angle="0" scale_x="7" scale_y="7"/>
                 </key>
             </timeline>
         </animation>

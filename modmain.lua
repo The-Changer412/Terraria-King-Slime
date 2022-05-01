@@ -2,7 +2,8 @@
 PrefabFiles = {
     "crown",
     "gel",
-    "slime_crown"
+    "slime_crown",
+    "blue_slime",
 }
 
 -- get the global string and ingredient var
