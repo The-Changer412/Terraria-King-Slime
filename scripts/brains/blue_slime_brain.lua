@@ -7,6 +7,7 @@ require "behaviours/standstill"
 --set the properties for the animation frame
 local ANIM_FRAME_MAX = 1
 local ANIM_FRAME_STATE = 0
+local dropped_loot = false
 
 --create the brain
 local blue_slime_brain = Class(Brain, function(self, inst)
@@ -32,7 +33,19 @@ function blue_slime_brain:OnStart()
             self.inst.AnimState:SetBank("blue_slime_" .. tostring(ANIM_FRAME_STATE))
                 self.inst.AnimState:SetBuild("blue_slime_" .. tostring(ANIM_FRAME_STATE))
                 self.inst.AnimState:PlayAnimation("idle")
-            end)
+
+            print(self.inst.Transform:GetWorldPosition())
+        end),
+
+        --manually drop the loot on death
+        WhileNode(function()
+            if self.inst.components.health.currenthealth <= 0 and dropped_loot == false then
+                self.inst.components.lootdropper:DropLoot(self.inst:GetPosition())
+                dropped_loot = true
+            end
+        end),
+            -- WhileNode(function() return TheWorld and not TheWorld.state.isnight end, "IsNotNight",
+    		-- 	Wander(self.inst, function() return self.inst.components.knownlocations:GetLocation("home") end, 10)),
     }, .25)
 
     --no idea what this does, but i think it attaches the root to the brain
