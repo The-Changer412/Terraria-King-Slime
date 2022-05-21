@@ -37,14 +37,19 @@ local function fn()
         return inst
     end
 
+    --make it where the slime wont slide away when being pushed
+    inst.Physics:SetMass(1)
+    inst.Physics:SetCapsule(0.2, 0.2)
+    inst.Physics:SetFriction(0)
+    inst.Physics:SetDamping(0)
+
     -- set the movement state properties
     inst:AddComponent("locomotor")
-    inst.components.locomotor.walkspeed = 4
-    inst.components.locomotor.runspeed = 8
+    inst.components.locomotor.runspeed = 4
 
     -- set the health properties
     inst:AddComponent("health")
-    -- inst.components.health:SetMaxHealth(200)
+    -- inst.components.health:SetMaxHealth(130)
     inst.components.health:SetMaxHealth(1)
 
     inst:AddComponent("lootdropper")
