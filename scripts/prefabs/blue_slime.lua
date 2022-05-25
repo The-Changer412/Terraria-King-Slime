@@ -59,6 +59,7 @@ local function fn()
     inst:AddComponent("combat")
     inst.components.combat:SetDefaultDamage(10)
     inst.components.combat:SetAttackPeriod(1)
+    inst.components.combat:SetRange(0.5)
     -- inst.components.combat:SetRetargetFunction(3, retargetfn)
 
     -- give it it's brain

@@ -8,8 +8,12 @@ require "behaviours/standstill"
 local ANIM_FRAME_MAX = 1
 local ANIM_FRAME_STATE = 0
 local SEE_DIST = 9
-local ATTACK_DIST = 1
+local ATTACK_DIST = 2
 local wander_time = 0
+local jump_time_max = 1
+local jump_time = jump_time_max
+local jump_up = true
+local jump_spd = 10
 local state_switch = math.random(1, 80)
 local state = "idle"
 local closest_dis = nil
@@ -89,7 +93,17 @@ function blue_slime_brain:OnStart()
                     if ATTACK_DIST >= dis then
                         state = "attack"
                     else
-                        state = "chase"
+                        if state == "attack" then
+                            if jump_up == false and jump_time <=0 then
+                                state = "chase"
+                                jump_time = jump_time_max
+                                jump_up = true
+                            end
+                        else
+                            state = "chase"
+                            jump_time = jump_time_max
+                            jump_up = true
+                        end
                     end
                     wander_time = 0
                 else
@@ -101,32 +115,63 @@ function blue_slime_brain:OnStart()
                             state = "idle"
                         end
                         --reset the targeting system
+                        jump_time = jump_time_max
+                        jump_up = true
                         closest_player = nil
                         closest_dis = nil
                         self.inst.components.combat:SetTarget(nil)
                         self.inst.components.locomotor:Stop()
 
                     --make it randomly switch between wander and idle after cooldown
-                    elseif state == "wander" or state == "idle" then
-                        if state_switch <= 0 then
-                            if math.random(0, 1) == 0 then
-                                state = "wander"
-                            else
-                                state = "idle"
-                            end
-                            state_switch = math.random(1, 80)
-                        else
-                            state_switch = state_switch - 1
-                        end
+                    -- elseif state == "wander" or state == "idle" then
+                    --     if state_switch <= 0 then
+                    --         if math.random(0, 1) == 0 then
+                    --             state = "wander"
+                    --         else
+                    --             state = "idle"
+                    --         end
+                    --         state_switch = math.random(1, 80)
+                    --     else
+                    --         state_switch = state_switch - 1
+                    --     end
                     end
                 end
             end
         end),
 
-        -- make the slime not move when idle
+        --slime attack
+        WhileNode(function()
+            if state == "attack" then
+                --stop any movement
+                wander_time = 0
+                closest_player = nil
+                closest_dis = nil
+                self.inst.components.combat:SetTarget(nil)
+                self.inst.components.locomotor:Stop()
+
+                --jump cycle
+                if jump_time > 0 then
+                    if jump_up then
+                        self.inst.Physics:SetMotorVel(0, jump_spd, 0)
+                    else
+                        self.inst.Physics:SetMotorVel(0, -jump_spd, 0)
+                    end
+                    jump_time = jump_time -1
+                else
+                    jump_time = jump_time_max
+                    if jump_up == false then
+                        jump_up = true
+                    else
+                        jump_up = false
+                    end
+                end
+            end
+        end),
+
+        --make the slime not move when idle
         WhileNode(function()
             if state == "idle" then
-                -- stop any movement
+                --stop any movement
                 wander_time = 0
                 closest_player = nil
                 closest_dis = nil
@@ -135,7 +180,7 @@ function blue_slime_brain:OnStart()
             end
         end),
 
-        -- make the slime wander around the world
+        --make the slime wander around the world
         WhileNode(function()
             if state == "wander" then
                 if wander_time <= 0 then
@@ -155,7 +200,7 @@ function blue_slime_brain:OnStart()
                 --get the combat
                 local combat = self.inst.components.combat
 
-                -- set the closest player as the target and chase them
+                --set the closest player as the target and chase them
                 if closest_player ~= nil then
                     --set the target
                     combat:SetTarget(closest_player)
