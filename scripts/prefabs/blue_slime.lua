@@ -14,6 +14,12 @@ local prefabs =
     "gel"
 }
 
+local loot = {}
+
+for i = 1, math.random(1, 3), 1 do
+    table.insert(loot, "gel")
+end
+
 -- main function of the entity
 local function fn()
     --create the important properties for the entity
@@ -43,24 +49,20 @@ local function fn()
     inst.Physics:SetFriction(0)
     inst.Physics:SetDamping(0)
 
-    -- set the movement state properties
+    -- set the movement state property
     inst:AddComponent("locomotor")
     inst.components.locomotor.runspeed = 4
 
-    -- set the health properties
+    -- set the health property
     inst:AddComponent("health")
-    -- inst.components.health:SetMaxHealth(130)
-    inst.components.health:SetMaxHealth(1)
+    inst.components.health:SetMaxHealth(130)
 
+    --set the loot property
     inst:AddComponent("lootdropper")
-    inst.components.lootdropper:SetLoot({"gel"})
+    inst.components.lootdropper:SetLoot(loot)
 
-    -- set the combat properties
+    -- set the combat property
     inst:AddComponent("combat")
-    inst.components.combat:SetDefaultDamage(10)
-    inst.components.combat:SetAttackPeriod(1)
-    inst.components.combat:SetRange(0.5)
-    -- inst.components.combat:SetRetargetFunction(3, retargetfn)
 
     -- give it it's brain
     inst:SetBrain(brain)

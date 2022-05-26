@@ -8,12 +8,15 @@ require "behaviours/standstill"
 local ANIM_FRAME_MAX = 1
 local ANIM_FRAME_STATE = 0
 local SEE_DIST = 9
-local ATTACK_DIST = 2
+local ATTACK_DIST = 1.5
+local DAMAGE_DIST = 1.3
+local DAMAGE = 12
 local wander_time = 0
+local is_jump_cooldown = false
 local jump_time_max = 1
 local jump_time = jump_time_max
+local jump_spd = 11.5
 local jump_up = true
-local jump_spd = 10
 local state_switch = math.random(1, 80)
 local state = "idle"
 local closest_dis = nil
@@ -87,53 +90,75 @@ function blue_slime_brain:OnStart()
                     end
                 end
 
-                --check the distance to see if it's in the seeing distance
-                if SEE_DIST >= dis then
-                    --check to see to chase them or to attack them
-                    if ATTACK_DIST >= dis then
-                        state = "attack"
-                    else
-                        if state == "attack" then
-                            if jump_up == false and jump_time <=0 then
+                --only switch state when not on jump cooldown
+                if is_jump_cooldown == false then
+                    --check the distance to see if it's in the seeing distance
+                    if SEE_DIST >= dis then
+                        --check to see to chase them or to attack them
+                        if ATTACK_DIST >= dis then
+                            state = "attack"
+                        else
+                            if state == "attack" then
+                                --first check to see if the slime is up in the air before switching
+                                if jump_up == false and jump_time <=0 then
+                                    state = "chase"
+                                    jump_time = jump_time_max
+                                    jump_up = true
+
+                                    --since the slime just landed, it should do damage
+                                    local x, y, z = self.inst.Transform:GetWorldPosition()
+                                    --loop over all of the players to see which one is the closest
+                                    for i, v in ipairs(AllPlayers) do
+                                        --get the player pos and the distance of them from the slime
+                                        local vx, vy, vz = v.Transform:GetWorldPosition()
+                                        local dis = math.sqrt((vx - x)^2 + (vz - z)^2)
+                                        --if the player is the closest then damage it
+                                        if DAMAGE_DIST > dis then
+                                            v.components.combat:GetAttacked(self.inst, DAMAGE)
+                                        end
+                                    end
+
+                                    --start thr jump cooldown
+                                    state = "idle"
+                                    is_jump_cooldown = true
+                                    state_switch = 3
+                                end
+                            else
                                 state = "chase"
                                 jump_time = jump_time_max
                                 jump_up = true
                             end
-                        else
-                            state = "chase"
+                        end
+                        wander_time = 0
+                    else
+                        --randomly pick to wander or to idle
+                        if state ~= "wander" and state ~= "idle" then
+                            if math.random(0, 1) == 0 then
+                                state = "wander"
+                            else
+                                state = "idle"
+                            end
+                            --reset the targeting system
                             jump_time = jump_time_max
                             jump_up = true
-                        end
-                    end
-                    wander_time = 0
-                else
-                    --randomly pick to wander or to idle
-                    if state ~= "wander" and state ~= "idle" then
-                        if math.random(0, 1) == 0 then
-                            state = "wander"
-                        else
-                            state = "idle"
-                        end
-                        --reset the targeting system
-                        jump_time = jump_time_max
-                        jump_up = true
-                        closest_player = nil
-                        closest_dis = nil
-                        self.inst.components.combat:SetTarget(nil)
-                        self.inst.components.locomotor:Stop()
+                            closest_player = nil
+                            closest_dis = nil
+                            self.inst.components.combat:SetTarget(nil)
+                            self.inst.components.locomotor:Stop()
 
-                    --make it randomly switch between wander and idle after cooldown
-                    -- elseif state == "wander" or state == "idle" then
-                    --     if state_switch <= 0 then
-                    --         if math.random(0, 1) == 0 then
-                    --             state = "wander"
-                    --         else
-                    --             state = "idle"
-                    --         end
-                    --         state_switch = math.random(1, 80)
-                    --     else
-                    --         state_switch = state_switch - 1
-                    --     end
+                        --make it randomly switch between wander and idle after cooldown
+                        elseif state == "wander" or state == "idle" then
+                            if state_switch <= 0 then
+                                if math.random(0, 1) == 0 then
+                                    state = "wander"
+                                else
+                                    state = "idle"
+                                end
+                                state_switch = math.random(1, 80)
+                            else
+                                state_switch = state_switch - 1
+                            end
+                        end
                     end
                 end
             end
@@ -150,19 +175,40 @@ function blue_slime_brain:OnStart()
                 self.inst.components.locomotor:Stop()
 
                 --jump cycle
-                if jump_time > 0 then
-                    if jump_up then
-                        self.inst.Physics:SetMotorVel(0, jump_spd, 0)
+                if is_jump_cooldown == false then
+                    if jump_time > 0 then
+                        --check to see if the slime should move up or down
+                        if jump_up then
+                            self.inst.Physics:SetMotorVel(0, jump_spd, 0)
+                        else
+                            self.inst.Physics:SetMotorVel(0, -jump_spd, 0)
+                        end
+                        --countdown the jump timer
+                        jump_time = jump_time -1
                     else
-                        self.inst.Physics:SetMotorVel(0, -jump_spd, 0)
-                    end
-                    jump_time = jump_time -1
-                else
-                    jump_time = jump_time_max
-                    if jump_up == false then
-                        jump_up = true
-                    else
-                        jump_up = false
+                        --reset the jump timer and move the opposide way
+                        jump_time = jump_time_max
+                        if jump_up == false then
+                            jump_up = true
+                            --if the slime just landed, do damage to all players near him
+                            local x, y, z = self.inst.Transform:GetWorldPosition()
+                            --loop over all of the players to see which one is the closest
+                            for i, v in ipairs(AllPlayers) do
+                                --get the player pos and the distance of them from the slime
+                                local vx, vy, vz = v.Transform:GetWorldPosition()
+                                local dis = math.sqrt((vx - x)^2 + (vz - z)^2)
+                                --if the player is the closest then damage it
+                                if DAMAGE_DIST > dis then
+                                    v.components.combat:GetAttacked(self.inst, DAMAGE)
+                                end
+                            end
+                            --make the slime attack on cooldown
+                            state = "idle"
+                            is_jump_cooldown = true
+                            state_switch = 3
+                        else
+                            jump_up = false
+                        end
                     end
                 end
             end
@@ -177,6 +223,18 @@ function blue_slime_brain:OnStart()
                 closest_dis = nil
                 self.inst.components.combat:SetTarget(nil)
                 self.inst.components.locomotor:Stop()
+
+                --check if the jump attack is on cooldown and count it down
+                if is_jump_cooldown == true then
+                    if state_switch > 0 then
+                        state_switch = state_switch -1
+                    else
+                        state = "chase"
+                        is_jump_cooldown = false
+                        jump_time = jump_time_max
+                        jump_up = true
+                    end
+                end
             end
         end),
 
@@ -201,7 +259,7 @@ function blue_slime_brain:OnStart()
                 local combat = self.inst.components.combat
 
                 --set the closest player as the target and chase them
-                if closest_player ~= nil then
+                if closest_player ~= nil and closest_player:HasTag("playerghost") == false then
                     --set the target
                     combat:SetTarget(closest_player)
 
