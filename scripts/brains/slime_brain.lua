@@ -4,12 +4,14 @@ require "behaviours/doaction"
 require "behaviours/chaseandattack"
 require "behaviours/standstill"
 
-
+local types = {"blue", "green", "purple"}
 
 --create the brain
-local blue_slime_brain = Class(Brain, function(self, inst)
+local slime_brain = Class(Brain, function(self, inst)
     Brain._ctor(self, inst)
+
     --set the properties for the brain
+    self._TYPE = types[math.random(#types)]
     self._ANIM_FRAME_MAX = 1
     self._ANIM_FRAME_STATE = 0
     self._SEE_DIST = 9
@@ -30,7 +32,7 @@ local blue_slime_brain = Class(Brain, function(self, inst)
 end)
 
 --tell the brain what to do when started
-function blue_slime_brain:OnStart()
+function slime_brain:OnStart()
 
     --no idea what this does, but its probably needed
     local root = PriorityNode(
@@ -54,8 +56,8 @@ function blue_slime_brain:OnStart()
                 end
 
                 --play the correct animation
-                self.inst.AnimState:SetBank("blue_slime_" .. tostring(self._ANIM_FRAME_STATE))
-                self.inst.AnimState:SetBuild("blue_slime_" .. tostring(self._ANIM_FRAME_STATE))
+                self.inst.AnimState:SetBank(self._TYPE .. "_slime_" .. tostring(self._ANIM_FRAME_STATE))
+                self.inst.AnimState:SetBuild(self._TYPE .. "_slime_" .. tostring(self._ANIM_FRAME_STATE))
                 self.inst.AnimState:PlayAnimation("idle")
             end
         end),
@@ -289,4 +291,4 @@ function blue_slime_brain:OnStart()
 end
 
 --give the brain back
-return blue_slime_brain
+return slime_brain

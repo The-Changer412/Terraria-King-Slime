@@ -1,11 +1,15 @@
 --get the brain
-local brain = require "brains/blue_slime_brain"
+local brain = require "brains/slime_brain"
 
 --import the assets
 local assets =
 {
     Asset("ANIM", "anim/blue_slime_0.zip"),
     Asset("ANIM", "anim/blue_slime_1.zip"),
+    Asset("ANIM", "anim/green_slime_0.zip"),
+    Asset("ANIM", "anim/green_slime_1.zip"),
+    Asset("ANIM", "anim/purple_slime_0.zip"),
+    Asset("ANIM", "anim/purple_slime_1.zip"),
 }
 
 --import the prefabs
@@ -72,4 +76,4 @@ local function fn()
 end
 
 -- return the slime
-return Prefab("blue_slime", fn, assets, prefabs)
+return Prefab("slime", fn, assets, prefabs)
