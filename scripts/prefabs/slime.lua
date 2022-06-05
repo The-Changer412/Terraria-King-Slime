@@ -34,6 +34,9 @@ local function fn()
     local dync = inst.entity:AddDynamicShadow()
     local network = inst.entity:AddNetwork()
 
+    --mark the slime as an emeny
+    inst:AddTag("hostile")
+
     --give the entity physics
     MakeCharacterPhysics(inst, 10, 0.5)
 
