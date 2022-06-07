@@ -4,6 +4,7 @@ PrefabFiles = {
     "gel",
     "slime_crown",
     "slime",
+    "slime_spawner"
 }
 
 -- get the global string and ingredient var
@@ -30,7 +31,7 @@ local crown = AddRecipe(
 -- add in the crafting recipe for the slime crown
 local slime_crown = AddRecipe(
     "slime_crown",  -- name
-    { Ingredient("crown", 1, "images/inventoryimages/crown.xml", "crown.tex"), Ingredient("gel", 10, "images/inventoryimages/gel.xml", "gel.tex") }, -- ingredients
+    { Ingredient("crown", 1, "images/inventoryimages/crown.xml", "crown.tex"), Ingredient("gel", 20, "images/inventoryimages/gel.xml", "gel.tex") }, -- ingredients
      G.RECIPETABS.WAR, -- tab
      G.TECH.NONE, -- crafting level
      nil, -- does it need to be placed?
@@ -53,3 +54,18 @@ STRINGS.RECIPE_DESC.CROWN = "The crown is to small to put on your head."
 STRINGS.NAMES.SLIME_CROWN = "Slime Crown"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.SLIME_CROWN = "It looks like a king version of the small slimy creatures."
 STRINGS.RECIPE_DESC.SLIME_CROWN = "I heard that this item will attract a certain creature."
+
+--attach the spawner_slime function to post initiation of the world
+if STRINGS.NAMES.MIGRATION_PORTAL then
+	AddPrefabPostInit("world", function(inst)
+		if inst.ismastersim then
+			inst:AddComponent("spawner_slime")
+		end
+	end)
+else
+	AddPrefabPostInit("forest", function(inst)
+		if inst.ismastersim then
+			inst:AddComponent("spawner_slime")
+		end
+	end)
+end

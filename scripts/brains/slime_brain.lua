@@ -37,7 +37,7 @@ function slime_brain:OnStart()
     --no idea what this does, but its probably needed
     local root = PriorityNode(
     {
-        --switch _state to dead when it died
+        --switch state to dead when it died
         WhileNode(function()
             if self.inst.components.health.currenthealth <= 0 then
                 self._state = "dead"
