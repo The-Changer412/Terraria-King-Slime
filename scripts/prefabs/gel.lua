@@ -42,15 +42,16 @@ local function fn()
     inst:AddComponent("useabletargeteditem")
     inst.components.useabletargeteditem:SetTargetPrefab("slime_crown")
     inst.components.useabletargeteditem:SetOnUseFn(function(item_use, item_used_on, player)
-
-
+        --spawn in king slime (the slime is the placeholder) nearby the crown
         local vx, vy, vz = item_used_on.Transform:GetWorldPosition()
         local rx = math.random(-16, 16)
         local rz = math.random(-16, 16)
         SpawnPrefab("slime").Transform:SetPosition(vx+rx, vy, vz+rz)
 
+        --make the player say something about it
         player.components.talker:Say("I hear something big coming this way.")
 
+        --use the gel, and despawn the crown
         item_use.components.stackable:SetStackSize(item_use.components.stackable:StackSize() - 1)
         item_used_on:Remove()
 

@@ -28,6 +28,7 @@ function slime_spawner_brain:OnStart()
             for k,v in pairs(Ents) do
                 if v.prefab == "terrarium" then
                     if v.components.inventoryitem.owner == nil and TheWorld.state.isday == true then
+                        --add in a delay for the slime spawner
                         if self._start_delay < 0 then
                             --tell the playrs that slimes are spawning
                             if self._talk_spawn == false then
@@ -67,6 +68,8 @@ function slime_spawner_brain:OnStart()
                             self._talk_despawn = true
                             self._talk_spawn = false
                         end
+
+                        --reset the stats
                         self._start_delay = self._START_DELAY_MAX
                         self._slime_spawner_max = 0
                         self._slime_spawner = self._slime_spawner_max
