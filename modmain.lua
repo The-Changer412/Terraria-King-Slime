@@ -48,7 +48,7 @@ STRINGS.NAMES.GEL = "Gel"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.GEL = "Ew, it's slimy."
 
 STRINGS.NAMES.CROWN = "Crown"
-STRINGS.CHARACTERS.GENERIC.DESCRIBE.CROWN = "It's to bad that it's to small to put on my head."
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.CROWN = "It's too bad that it's too small to put on my head."
 STRINGS.RECIPE_DESC.CROWN = "The crown is to small to put on your head."
 
 STRINGS.NAMES.SLIME_CROWN = "Slime Crown"

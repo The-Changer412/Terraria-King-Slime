@@ -20,7 +20,7 @@ local prefabs =
 
 local loot = {}
 
-for i = 1, math.random(1, 3), 1 do
+for i = 1, math.random(2, 4), 1 do
     table.insert(loot, "gel")
 end
 

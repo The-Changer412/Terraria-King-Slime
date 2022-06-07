@@ -6,6 +6,12 @@ local assets =
     Asset("IMAGE", "images/inventoryimages/gel.tex"),
  }
 
+ prefabs =
+ {
+     "slime_crown",
+    "slime"
+ }
+
 -- main function for the item
 local function fn()
     -- initalize the the item entity,  transform, and animation state
@@ -32,6 +38,25 @@ local function fn()
     --make the item stackable
     inst:AddComponent("stackable")
     inst.components.stackable.maxsize = 40
+
+    inst:AddComponent("useabletargeteditem")
+    inst.components.useabletargeteditem:SetTargetPrefab("slime_crown")
+    inst.components.useabletargeteditem:SetOnUseFn(function(item_use, item_used_on, player)
+
+
+        local vx, vy, vz = item_used_on.Transform:GetWorldPosition()
+        local rx = math.random(-16, 16)
+        local rz = math.random(-16, 16)
+        SpawnPrefab("slime").Transform:SetPosition(vx+rx, vy, vz+rz)
+
+        player.components.talker:Say("I hear something big coming this way.")
+
+        item_use.components.stackable:SetStackSize(item_use.components.stackable:StackSize() - 1)
+        item_used_on:Remove()
+
+        return true
+    end)
+    inst.components.useabletargeteditem:SetInventoryDisable(true)
 
     return inst
 end
