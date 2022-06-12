@@ -46,13 +46,16 @@ local function fn()
         local vx, vy, vz = item_used_on.Transform:GetWorldPosition()
         local rx = math.random(-16, 16)
         local rz = math.random(-16, 16)
-        SpawnPrefab("slime").Transform:SetPosition(vx+rx, vy, vz+rz)
+        SpawnPrefab("king_slime").Transform:SetPosition(vx+rx, vy, vz+rz)
 
         --make the player say something about it
-        player.components.talker:Say("I hear something big coming this way.")
+        player.components.talker:Say("That is a big slime.")
 
         --use the gel, and despawn the crown
         item_use.components.stackable:SetStackSize(item_use.components.stackable:StackSize() - 1)
+        if item_use.components.stackable:StackSize() == 0 then
+            item_use:Remove()
+        end
         item_used_on:Remove()
 
         return true

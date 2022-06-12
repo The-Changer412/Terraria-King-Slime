@@ -4,7 +4,8 @@ PrefabFiles = {
     "gel",
     "slime_crown",
     "slime",
-    "slime_spawner"
+    "slime_spawner",
+    "king_slime",
 }
 
 -- get the global string and ingredient var
