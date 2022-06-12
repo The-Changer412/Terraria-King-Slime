@@ -44,8 +44,8 @@ local function fn()
     inst.components.useabletargeteditem:SetOnUseFn(function(item_use, item_used_on, player)
         --spawn in king slime (the slime is the placeholder) nearby the crown
         local vx, vy, vz = item_used_on.Transform:GetWorldPosition()
-        local rx = math.random(-16, 16)
-        local rz = math.random(-16, 16)
+        local rx = math.random(-12, 12)
+        local rz = math.random(-12, 12)
         SpawnPrefab("king_slime").Transform:SetPosition(vx+rx, vy, vz+rz)
 
         --make the player say something about it

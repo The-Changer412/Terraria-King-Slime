@@ -6,6 +6,7 @@ PrefabFiles = {
     "slime",
     "slime_spawner",
     "king_slime",
+    "weak_slime",
 }
 
 -- get the global string and ingredient var

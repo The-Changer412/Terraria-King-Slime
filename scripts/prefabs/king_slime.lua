@@ -19,7 +19,7 @@ local prefabs =
 
 local loot = {}
 
-for i = 1, math.random(5, 12), 1 do
+for i = 1, math.random(5, 14), 1 do
     table.insert(loot, "gel")
 end
 
@@ -90,11 +90,11 @@ local function fn()
 
     -- set the movement state property
     inst:AddComponent("locomotor")
-    inst.components.locomotor.runspeed = 4
+    inst.components.locomotor.runspeed = 3
 
     -- set the health property
     inst:AddComponent("health")
-    inst.components.health:SetMaxHealth(3000)
+    inst.components.health:SetMaxHealth(2500)
 
     --set the san
     inst:AddComponent("sanityaura")

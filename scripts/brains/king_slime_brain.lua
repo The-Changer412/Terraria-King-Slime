@@ -11,14 +11,16 @@ local king_slime_brain = Class(Brain, function(self, inst)
     --set the properties for the brain
     self._ANIM_FRAME_MAX = 3
     self._ANIM_FRAME_STATE = 0
-    self._ATTACK_DIST = 1.5
-    self._DAMAGE_DIST = 1.3
+    self._ATTACK_DIST = 2.3
+    self._DAMAGE_DIST = 2.0
     self._DAMAGE = 105
     self._JUMP_SPD = 11.5
+    self._JUMP_TIME_MAX = 1
+    self._WEAK_SLIME_SPAWNER_MAX = 45
+    self._weak_slime_spawner = self._WEAK_SLIME_SPAWNER_MAX
     self._wander_time = 0
     self._is_jump_cooldown = false
-    self._jump_time_max = 1
-    self._jump_time = self._jump_time_max
+    self._jump_time = self._JUMP_TIME_MAX
     self._jump_up = true
     self._state_switch = math.random(1, 80)
     self._state = "idle"
@@ -106,7 +108,7 @@ function king_slime_brain:OnStart()
                             --first check to see if the slime is up in the air before switching
                             if self._jump_up == false and self._jump_time <=0 then
                                 self._state = "chase"
-                                self._jump_time =self._jump_time_max
+                                self._jump_time =self._JUMP_TIME_MAX
                                 self._jump_up = true
 
                                 --since the slime just landed, it should do damage
@@ -129,7 +131,7 @@ function king_slime_brain:OnStart()
                             end
                         else
                             self._state = "chase"
-                            self._jump_time = self._jump_time_max
+                            self._jump_time = self._JUMP_TIME_MAX
                             self._jump_up = true
                         end
                     end
@@ -165,7 +167,7 @@ function king_slime_brain:OnStart()
                         self._jump_time = self._jump_time -1
                     else
                         --reset the jump timer and move the opposide way
-                        self._jump_time = self._jump_time_max
+                        self._jump_time = self._JUMP_TIME_MAX
                         if self._jump_up == false then
                             self._jump_up = true
                             --if the slime just landed, do damage to all players near him
@@ -209,26 +211,12 @@ function king_slime_brain:OnStart()
                     else
                         self._state = "chase"
                         self._is_jump_cooldown = false
-                        self._jump_time = self._jump_time_max
+                        self._jump_time = self._JUMP_TIME_MAX
                         self._jump_up = true
                     end
                 end
             end
         end),
-
-        -- --make the slime wander around the world
-        -- WhileNode(function()
-        --     if self._state == "wander" then
-        --         if self._wander_time <= 0 then
-        --             local angle = math.random(-180, 180)
-        --             self.inst.Transform:SetRotation(angle)
-        --             self.inst.components.locomotor:RunForward()
-        --             self._wander_time = math.random(2, 12)
-        --         else
-        --             self._wander_time = self._wander_time - 1
-        --         end
-        --     end
-        -- end),
 
         --chase after the target
         WhileNode(function()
@@ -253,6 +241,22 @@ function king_slime_brain:OnStart()
                     self._closest_dis = nil
                     combat:SetTarget(nil)
                     self.inst.components.locomotor:Stop()
+                end
+            end
+        end),
+
+        --spawn in a weak slime nearby king slime in a timer
+        WhileNode(function()
+            --check to see if king slime is not dead and not in the air
+            if self._state ~= "dead" and self._jump_time > 0 then
+                if self._weak_slime_spawner > 0 then
+                    self._weak_slime_spawner = self._weak_slime_spawner - 1
+                else
+                    local vx, vy, vz = self.inst.Transform:GetWorldPosition()
+                    local rx = math.random(-1.75 ,1.75)
+                    local rz = math.random(-1.75 ,1.75)
+                    SpawnPrefab("weak_slime").Transform:SetPosition(vx+rx, vy, vz+rz)
+                    self._weak_slime_spawner = self._WEAK_SLIME_SPAWNER_MAX
                 end
             end
         end),

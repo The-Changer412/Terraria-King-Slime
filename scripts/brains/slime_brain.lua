@@ -19,10 +19,10 @@ local slime_brain = Class(Brain, function(self, inst)
     self._DAMAGE_DIST = 1.3
     self._DAMAGE = 20
     self._JUMP_SPD = 11.5
+    self._JUMP_TIME_MAX = 1
     self._wander_time = 0
     self._is_jump_cooldown = false
-    self._jump_time_max = 1
-    self._jump_time = self._jump_time_max
+    self._jump_time = self._JUMP_TIME_MAX
     self._jump_up = true
     self._state_switch = math.random(1, 80)
     self._state = "idle"
@@ -105,7 +105,7 @@ function slime_brain:OnStart()
                                 --first check to see if the slime is up in the air before switching
                                 if self._jump_up == false and self._jump_time <=0 then
                                     self._state = "chase"
-                                    self._jump_time =self._jump_time_max
+                                    self._jump_time =self._JUMP_TIME_MAX
                                     self._jump_up = true
 
                                     --since the slime just landed, it should do damage
@@ -128,7 +128,7 @@ function slime_brain:OnStart()
                                 end
                             else
                                 self._state = "chase"
-                                self._jump_time = self._jump_time_max
+                                self._jump_time = self._JUMP_TIME_MAX
                                 self._jump_up = true
                             end
                         end
@@ -142,7 +142,7 @@ function slime_brain:OnStart()
                                 self._state = "idle"
                             end
                             --reset the targeting system
-                            self._jump_time = self._jump_time_max
+                            self._jump_time = self._JUMP_TIME_MAX
                             self._jump_up = true
                             self._closest_player = nil
                             self._closest_dis = nil
@@ -190,7 +190,7 @@ function slime_brain:OnStart()
                         self._jump_time = self._jump_time -1
                     else
                         --reset the jump timer and move the opposide way
-                        self._jump_time = self._jump_time_max
+                        self._jump_time = self._JUMP_TIME_MAX
                         if self._jump_up == false then
                             self._jump_up = true
                             --if the slime just landed, do damage to all players near him
@@ -234,7 +234,7 @@ function slime_brain:OnStart()
                     else
                         self._state = "chase"
                         self._is_jump_cooldown = false
-                        self._jump_time = self._jump_time_max
+                        self._jump_time = self._JUMP_TIME_MAX
                         self._jump_up = true
                     end
                 end
