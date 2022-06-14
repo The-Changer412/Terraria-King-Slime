@@ -59,11 +59,15 @@ STRINGS.NAMES.SLIME_CROWN = "Slime Crown"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.SLIME_CROWN = "It looks like a king version of the small slimy creatures."
 STRINGS.RECIPE_DESC.SLIME_CROWN = "I heard that this item will attract a certain creature."
 
+STRINGS.NAMES.SLIME = "Slime"
+STRINGS.NAMES.KING_SLIME = "King Slime"
+STRINGS.NAMES.WEAK_SLIME = "Weak Slime"
+
 STRINGS.NAMES.ROYAL_GEL = "Royal Gel"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.ROYAL_GEL = "This werid object is making slimes friendly with me when I have it on me."
 
 STRINGS.NAMES.SLIMY_JERKY = "Slimey Jerky"
-STRINGS.CHARACTERS.GENERIC.DESCRIBE.SLIMY_JERKY = "Ewww. Who would eat this?"
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.SLIMY_JERKY = "Ewww. Who would eat that?"
 
 --attach the spawner_slime function to post initiation of the world
 if STRINGS.NAMES.MIGRATION_PORTAL then
