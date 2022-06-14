@@ -1,0 +1,6 @@
+<Atlas>
+    <Texture filename="slimy_jerky.tex"/>
+    <Elements>
+        <Element name="slimy_jerky.tex" u1="0.0078125" u2="0.9921875" v1="0.0078125" v2="0.9921875" />
+    </Elements>
+</Atlas>

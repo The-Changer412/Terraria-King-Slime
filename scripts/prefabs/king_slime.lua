@@ -17,10 +17,14 @@ local prefabs =
     "gel"
 }
 
-local loot = {}
+local loot = {"royal_gel"}
 
 for i = 1, math.random(5, 14), 1 do
     table.insert(loot, "gel")
+end
+
+for i = 1, math.random(1, 4), 1 do
+    table.insert(loot, "slimy_jerky")
 end
 
 

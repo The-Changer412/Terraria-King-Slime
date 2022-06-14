@@ -45,7 +45,7 @@ function slime_spawner_brain:OnStart()
                                 local rz = math.random(self._SLIME_SPAWN_RADIUS_MIN, self._SLIME_SPAWN_RADIUS_MAX)
                                 rx = rx * math.random(-1, 1)
                                 rz = rz * math.random(-1, 1)
-                                -- SpawnPrefab("slime").Transform:SetPosition(vx+rx, vy, vz+rz)
+                                SpawnPrefab("slime").Transform:SetPosition(vx+rx, vy, vz+rz)
 
                                 --reset the timer with a random cooldown
                                 self._slime_spawner_max = math.random(self._SLIME_SPAWNER_TIMER_MIN, self._SLIME_SPAWNER_TIMER_MAX)
@@ -53,7 +53,6 @@ function slime_spawner_brain:OnStart()
                             else
                                 --countdown the timer
                                 self._slime_spawner = self._slime_spawner - 1
-                                print(self._slime_spawner)
                             end
                             self._start_delay = self._START_DELAY_MAX
                         else

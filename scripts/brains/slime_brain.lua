@@ -97,42 +97,74 @@ function slime_brain:OnStart()
                 if self._is_jump_cooldown == false then
                     --check the distance to see if it's in the seeing distance
                     if self._SEE_DIST >= dis then
-                        --check to see to chase them or to attack them
-                        if self._ATTACK_DIST >= dis then
-                            self._state = "attack"
-                        else
-                            if self._state == "attack" then
-                                --first check to see if the slime is up in the air before switching
-                                if self._jump_up == false and self._jump_time <=0 then
-                                    self._state = "chase"
-                                    self._jump_time =self._JUMP_TIME_MAX
-                                    self._jump_up = true
-
-                                    --since the slime just landed, it should do damage
-                                    local x, y, z = self.inst.Transform:GetWorldPosition()
-                                    --loop over all of the players to see which one is the closest
-                                    for i, v in ipairs(AllPlayers) do
-                                        --get the player pos and the distance of them from the slime
-                                        local vx, vy, vz = v.Transform:GetWorldPosition()
-                                        local dis = math.sqrt((vx - x)^2 + (vz - z)^2)
-                                        --if the player is the closest then damage it
-                                        if self._DAMAGE_DIST > dis then
-                                            v.components.combat:GetAttacked(self.inst, self._DAMAGE)
-                                        end
-                                    end
-
-                                    --start the jump cooldown
-                                    self._state = "idle"
-                                    self._is_jump_cooldown = true
-                                    self._state_switch = 3
-                                end
+                        --make it not attack the player that has a royal gel in there inventory
+                        if self._closest_player.components.inventory:FindItem(function(testitem) return testitem:HasTag("royal_gel") end) == false then
+                            --check to see to chase them or to attack them
+                            if self._ATTACK_DIST >= dis then
+                                self._state = "attack"
                             else
-                                self._state = "chase"
+                                if self._state == "attack" then
+                                    --first check to see if the slime is up in the air before switching
+                                    if self._jump_up == false and self._jump_time <=0 then
+                                        self._state = "chase"
+                                        self._jump_time =self._JUMP_TIME_MAX
+                                        self._jump_up = true
+
+                                        --since the slime just landed, it should do damage
+                                        local x, y, z = self.inst.Transform:GetWorldPosition()
+                                        --loop over all of the players to see which one is the closest
+                                        for i, v in ipairs(AllPlayers) do
+                                            --get the player pos and the distance of them from the slime
+                                            local vx, vy, vz = v.Transform:GetWorldPosition()
+                                            local dis = math.sqrt((vx - x)^2 + (vz - z)^2)
+                                            --if the player is the closest then damage it
+                                            if self._DAMAGE_DIST > dis then
+                                                v.components.combat:GetAttacked(self.inst, self._DAMAGE)
+                                            end
+                                        end
+
+                                        --start the jump cooldown
+                                        self._state = "idle"
+                                        self._is_jump_cooldown = true
+                                        self._state_switch = 3
+                                    end
+                                else
+                                    self._state = "chase"
+                                    self._jump_time = self._JUMP_TIME_MAX
+                                    self._jump_up = true
+                                end
+                            end
+                            self._wander_time = 0
+                        else
+                            --randomly pick to wander or to idle
+                            if self._state ~= "wander" and self._state ~= "idle" then
+                                if math.random(0, 1) == 0 then
+                                    self._state = "wander"
+                                else
+                                    self._state = "idle"
+                                end
+                                --reset the targeting system
                                 self._jump_time = self._JUMP_TIME_MAX
                                 self._jump_up = true
+                                self._closest_player = nil
+                                self._closest_dis = nil
+                                self.inst.components.combat:SetTarget(nil)
+                                self.inst.components.locomotor:Stop()
+
+                            --make it randomly switch between wander and idle after cooldown
+                            elseif self._state == "wander" or self._state == "idle" then
+                                if self._state_switch <= 0 then
+                                    if math.random(0, 1) == 0 then
+                                        self._state = "wander"
+                                    else
+                                        self._state = "idle"
+                                    end
+                                    self._state_switch = math.random(1, 80)
+                                else
+                                    self._state_switch = self._state_switch - 1
+                                end
                             end
                         end
-                        self._wander_time = 0
                     else
                         --randomly pick to wander or to idle
                         if self._state ~= "wander" and self._state ~= "idle" then
