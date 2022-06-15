@@ -46,7 +46,7 @@ Slime is an enemy that spawn in when the Terrarium is place down on the floor du
 <br>
 The slime has 130 HP, and does 20 damage.
 
-### King Slime <img src="images\readme_images\mobs\king_slime_0.png" alt="King Slime" width="50"/>
+### King Slime <img src="images\readme_images\mobs\King_Slime_0.png" alt="King Slime" width="50"/>
 <img src="images\readme_images\other\king_slime.gif" alt="Idle King Slime" width="200"/>
 <br>
 <br>
