@@ -40,14 +40,14 @@ Slimy Jerky is meat that is dropped from King Slime. Eating this meat will give 
 ### Slimes: <img src="images\readme_images\mobs\blue_slime_0.png" alt="Blue Slime" width="30"/> <img src="images\readme_images\mobs\green_slime_0.png" alt="Green Slime" width="30"/> <img src="images\readme_images\mobs\purple_slime_0.png" alt="Purple Slime" width="30"/>
 <img src="images\readme_images\other\slime.gif" alt="Idle Blue Slime" width="200"/>
 <br>
-Slime is an enemy that spawn in when the Terrarium is place down on the floor during day time. They can randomly spawn in as blue, green, or purple. They will either sit still, or wander around the world, until they see a player. When the slime see a player, it will chase them down until it no longer sees the player. Once it's get close enough to the player, it will jump up in place to attack the player. Killing the slime will cause it drop 2 to 4 gels.
+Slime is an enemy that spawn in when the Terrarium is place down on the floor during day time. They can randomly spawn in as blue, green, or purple. They will either sit still, or wander around the world, until they see a player. When the slime see a player, it will chase them down until it no longer sees the player. Once it's get close enough to the player, it will jump up in place to attack the player. Killing the slime will cause it to drop 2 to 4 gels.
 <br>
 The slime has 130 HP, and does 20 damage.
 
 ### King Slime: &nbsp;&nbsp;<img src="images/readme_images/mobs/King_Slime_0.png" alt="King Slime" width="32"/>
 <img src="images\readme_images\other\king_slime.gif" alt="Idle King Slime" width="200"/>
 <br>
-King Slime is an boss that spawns in when the player left click a slime crown with gel. King slime will target the nearest player, and chase the player down. When it get close enough, it will do a jump attack on the player. King Slime will also periodically spawn in weak slime during the fight. Killing King Slime will cause it drop a Royal Gel, 5 to 14 Gel, and 1 to 4 Slimy Jerky.
+King Slime is an boss that spawns in when the player left click a slime crown with gel. King slime will target the nearest player, and chase the player down. When it get close enough, it will do a jump attack on the player. King Slime will also periodically spawn in weak slime during the fight. Killing King Slime will cause it to drop a Royal Gel, 5 to 14 Gel, and 1 to 4 Slimy Jerky.
 <br>
 King Slime has 2500 HP, does 105 damage, and drains 100 sanity per minute.
 
