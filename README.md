@@ -55,6 +55,6 @@ King Slime has 2500 HP, does 105 damage, and drains 100 sanity per minute.
 ### Weak Slimes: <img src="images\readme_images\mobs\blue_slime_0.png" alt="Blue Slime" width="30"/> <img src="images\readme_images\mobs\green_slime_0.png" alt="Green Slime" width="30"/> <img src="images\readme_images\mobs\purple_slime_0.png" alt="Purple Slime" width="30"/>
 <img src="images\readme_images\other\slime.gif" alt="Idle Blue Slime" width="200"/>
 <br>
-Weak Slime is an enemy that spawn in during the King Slime fight. It has the same A.I. and looks as normal slimes, but it has very little HP, and does not drop anything upon death.
+Weak Slime is an enemy that spawn in during the King Slime fight. The A.I. for the weak slime is similar to normal slimes, but they will always chase down the closest player. It also looks like the normal slimes, but it has very low HP, and drops nothing upon death.
 <br>
 The slime has 1 HP, and does 20 damage.

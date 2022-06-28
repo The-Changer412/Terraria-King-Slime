@@ -1,5 +1,5 @@
 --get the brain
-local brain = require "brains/slime_brain"
+local brain = require "brains/weak_slime_brain"
 
 --import the assets
 local assets =
