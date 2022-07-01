@@ -58,8 +58,6 @@ function slime_spawner_brain:OnStart()
                         else
                             self._start_delay = self._start_delay -1
                         end
-
-
                     else
                         --tell the playrs taht slimes stop spawning
                         if self._talk_despawn == false and self._talk_spawn == true then

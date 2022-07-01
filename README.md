@@ -40,7 +40,7 @@ Slimy Jerky is meat that is dropped from King Slime. Eating this meat will give 
 ### Slimes: <img src="images\readme_images\mobs\blue_slime_0.png" alt="Blue Slime" width="30"/> <img src="images\readme_images\mobs\green_slime_0.png" alt="Green Slime" width="30"/> <img src="images\readme_images\mobs\purple_slime_0.png" alt="Purple Slime" width="30"/>
 <img src="images\readme_images\other\slime.gif" alt="Idle Blue Slime" width="200"/>
 <br>
-Slime is an enemy that spawn in when the Terrarium is place down on the floor during day time. They can randomly spawn in as blue, green, or purple. They will either sit still, or wander around the world, until they see a player. When the slime see a player, it will chase them down until it no longer sees the player. Once it's get close enough to the player, it will jump up in place to attack the player. Killing the slime will cause it to drop 2 to 4 gels.
+Slime is an enemy that spawn in when the Terrarium is place down on the floor during day time (Note: if the slimes are now spawning in, try leaving and rejoining). They can randomly spawn in as blue, green, or purple. They will either sit still, or wander around the world, until they see a player. When the slime see a player, it will chase them down until it no longer sees the player. Once it's get close enough to the player, it will jump up in place to attack the player. Killing the slime will cause it to drop 2 to 4 gels.
 <br>
 The slime has 130 HP, and does 20 damage.
 
