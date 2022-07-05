@@ -1,9 +1,9 @@
 local slime_spawner_brain = Class(Brain, function(self, inst)
     Brain._ctor(self, inst)
-    self._SLIME_SPAWN_RADIUS_MAX = 11
-    self._SLIME_SPAWN_RADIUS_MIN = 5
-    self._SLIME_SPAWNER_TIMER_MAX = 40
-    self._SLIME_SPAWNER_TIMER_MIN = 18
+    self._SLIME_SPAWN_RADIUS_MAX = 9
+    self._SLIME_SPAWN_RADIUS_MIN = 3
+    self._SLIME_SPAWNER_TIMER_MAX = 5
+    self._SLIME_SPAWNER_TIMER_MIN = 3
     self._START_DELAY_MAX = 8
     self._start_delay = self._START_DELAY_MAX
     self._slime_spawner_max = 0
@@ -38,7 +38,7 @@ function slime_spawner_brain:OnStart()
                             end
 
                             --check if the timer is done
-                            if self._slime_spawner < 0 then
+                            if self._slime_spawner <= 0 then
                                 --make the slimne spawn in a random positon inside the radius of the terrarium
                                 local vx, vy, vz = v.Transform:GetWorldPosition()
                                 local rx = math.random(self._SLIME_SPAWN_RADIUS_MIN, self._SLIME_SPAWN_RADIUS_MAX)
@@ -53,6 +53,7 @@ function slime_spawner_brain:OnStart()
                             else
                                 --countdown the timer
                                 self._slime_spawner = self._slime_spawner - 1
+                                print(self._slime_spawner)
                             end
                             self._start_delay = self._START_DELAY_MAX
                         else
