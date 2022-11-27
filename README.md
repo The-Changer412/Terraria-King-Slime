@@ -6,7 +6,7 @@ LEGAL NOTICE: For obvious and legal reasons, I do not own the assets in this mod
 Note that for modders looking through the source code, some of the stuff that I did in here isn't the official way of doing due to me not able to get it to work, so I did them in a janky way.
 
 # Installation
-you can download the mod from the [Steam's Workshop page](https://www.youtube.com/watch?v=dQw4w9WgXcQ) or from the [release tab](https://www.youtube.com/watch?v=dQw4w9WgXcQ).  
+you can download the mod from the [Steam's Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=2893907099) or from the [release tab](https://github.com/The-Changer412/Terraria-King-Slime/releases/tag/Release).  
 
 # What does the Mod adds?
 The mod adds in 5 new items, with 2 of them being craftable, and 2 new enemies, and a 1 new boss.
